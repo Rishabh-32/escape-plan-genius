@@ -21,12 +21,29 @@ interface TravelFormProps {
 const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
-  const [budget, setBudget] = useState<number>(1000);
+  const [budget, setBudget] = useState<string>('1000');
   const [people, setPeople] = useState<number>(2);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch({ startDate, endDate, budget, people });
+    onSearch({ startDate, endDate, budget: Number(budget), people });
+  };
+
+  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setBudget(value);
+  };
+
+  const handleBudgetFocus = () => {
+    if (budget === '1000') {
+      setBudget('');
+    }
+  };
+
+  const handleBudgetBlur = () => {
+    if (budget === '') {
+      setBudget('1000');
+    }
   };
 
   return (
@@ -60,7 +77,13 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                   <Calendar
                     mode="single"
                     selected={startDate}
-                    onSelect={setStartDate}
+                    onSelect={(date) => {
+                      setStartDate(date);
+                      // If end date is before new start date, clear it
+                      if (endDate && date && endDate < date) {
+                        setEndDate(undefined);
+                      }
+                    }}
                     disabled={(date) => date < new Date()}
                     initialFocus
                     className="p-3 pointer-events-auto"
@@ -96,6 +119,7 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     selected={endDate}
                     onSelect={setEndDate}
                     disabled={(date) => date < (startDate || new Date())}
+                    month={startDate ? startDate : undefined}
                     initialFocus
                     className="p-3 pointer-events-auto"
                     fixedWeeks
@@ -112,13 +136,15 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
               <div className="relative">
                 <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
-                  type="number"
+                  type="text"
                   value={budget}
-                  onChange={(e) => setBudget(Number(e.target.value))}
+                  onChange={handleBudgetChange}
+                  onFocus={handleBudgetFocus}
+                  onBlur={handleBudgetBlur}
                   className="pl-10"
-                  min="100"
-                  step="100"
                   placeholder="Enter your budget"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
                 />
               </div>
             </div>
