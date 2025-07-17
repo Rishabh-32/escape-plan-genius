@@ -9,9 +9,10 @@ const Index = () => {
     startDate: Date | undefined;
     endDate: Date | undefined;
     budget: number;
+    people: number;
   } | null>(null);
 
-  const handleSearch = (data: { startDate: Date | undefined; endDate: Date | undefined; budget: number }) => {
+  const handleSearch = (data: { startDate: Date | undefined; endDate: Date | undefined; budget: number; people: number }) => {
     setSearchData(data);
   };
 
@@ -56,6 +57,7 @@ const Index = () => {
               budget={searchData.budget}
               startDate={searchData.startDate}
               endDate={searchData.endDate}
+              people={searchData.people}
             />
           </div>
         </div>

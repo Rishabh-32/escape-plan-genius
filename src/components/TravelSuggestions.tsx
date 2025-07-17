@@ -5,9 +5,10 @@ interface TravelSuggestionsProps {
   budget: number;
   startDate?: Date;
   endDate?: Date;
+  people: number;
 }
 
-const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate, endDate }) => {
+const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate, endDate, people }) => {
   const getDuration = () => {
     if (startDate && endDate) {
       const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
@@ -19,8 +20,10 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
 
   const getSuggestions = () => {
     const duration = getDuration();
+    // Adjust budget based on number of people
+    const totalBudget = budget * people;
     
-    if (budget < 500) {
+    if (totalBudget < 500) {
       return [
         {
           id: '1',
@@ -28,7 +31,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Czech Republic',
           image: '/placeholder.svg',
           description: 'Explore historic castles, beautiful architecture, and enjoy affordable dining in this magical European city.',
-          estimatedCost: budget * 0.8,
+          estimatedCost: Math.round(totalBudget * 0.8),
           rating: 4.6,
           duration,
           highlights: ['Prague Castle', 'Charles Bridge', 'Old Town Square', 'Local Cuisine']
@@ -39,7 +42,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Hungary',
           image: '/placeholder.svg',
           description: 'Discover thermal baths, stunning parliament buildings, and vibrant nightlife on a budget.',
-          estimatedCost: budget * 0.7,
+          estimatedCost: Math.round(totalBudget * 0.7),
           rating: 4.5,
           duration,
           highlights: ['Thermal Baths', 'Parliament Building', 'Danube River', 'Ruin Bars']
@@ -50,13 +53,13 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Poland',
           image: '/placeholder.svg',
           description: 'Medieval charm meets modern culture in this UNESCO World Heritage city.',
-          estimatedCost: budget * 0.6,
+          estimatedCost: Math.round(totalBudget * 0.6),
           rating: 4.7,
           duration,
           highlights: ['Main Market Square', 'Wawel Castle', 'Jewish Quarter', 'Salt Mine']
         }
       ];
-    } else if (budget < 1500) {
+    } else if (totalBudget < 1500) {
       return [
         {
           id: '4',
@@ -64,7 +67,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Portugal',
           image: '/placeholder.svg',
           description: 'Colorful neighborhoods, delicious pastries, and stunning coastal views await in this vibrant capital.',
-          estimatedCost: budget * 0.9,
+          estimatedCost: Math.round(totalBudget * 0.9),
           rating: 4.8,
           duration,
           highlights: ['Alfama District', 'Tram 28', 'Belém Tower', 'Pastéis de Nata']
@@ -75,7 +78,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Spain',
           image: '/placeholder.svg',
           description: 'Art, architecture, beaches, and amazing food come together in this Mediterranean paradise.',
-          estimatedCost: budget * 0.85,
+          estimatedCost: Math.round(totalBudget * 0.85),
           rating: 4.7,
           duration,
           highlights: ['Sagrada Familia', 'Park Güell', 'Las Ramblas', 'Gothic Quarter']
@@ -86,13 +89,13 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Netherlands',
           image: '/placeholder.svg',
           description: 'Canals, museums, and a unique culture make this one of Europe\'s most charming cities.',
-          estimatedCost: budget * 0.95,
+          estimatedCost: Math.round(totalBudget * 0.95),
           rating: 4.6,
           duration,
           highlights: ['Van Gogh Museum', 'Anne Frank House', 'Canal Cruise', 'Vondelpark']
         }
       ];
-    } else if (budget < 3000) {
+    } else if (totalBudget < 3000) {
       return [
         {
           id: '7',
@@ -100,7 +103,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Japan',
           image: '/placeholder.svg',
           description: 'Where ancient traditions meet cutting-edge technology in the world\'s most fascinating metropolis.',
-          estimatedCost: budget * 0.9,
+          estimatedCost: Math.round(totalBudget * 0.9),
           rating: 4.9,
           duration,
           highlights: ['Shibuya Crossing', 'Senso-ji Temple', 'Tsukiji Market', 'Mount Fuji']
@@ -111,7 +114,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'United States',
           image: '/placeholder.svg',
           description: 'The city that never sleeps offers world-class museums, Broadway shows, and iconic landmarks.',
-          estimatedCost: budget * 0.85,
+          estimatedCost: Math.round(totalBudget * 0.85),
           rating: 4.7,
           duration,
           highlights: ['Central Park', 'Statue of Liberty', 'Times Square', 'Brooklyn Bridge']
@@ -122,7 +125,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Australia',
           image: '/placeholder.svg',
           description: 'Stunning harbor views, beautiful beaches, and a laid-back lifestyle in Australia\'s most iconic city.',
-          estimatedCost: budget * 0.95,
+          estimatedCost: Math.round(totalBudget * 0.95),
           rating: 4.8,
           duration,
           highlights: ['Opera House', 'Harbour Bridge', 'Bondi Beach', 'Blue Mountains']
@@ -136,7 +139,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Maldives',
           image: '/placeholder.svg',
           description: 'Luxury overwater bungalows and pristine beaches in this tropical paradise.',
-          estimatedCost: budget * 0.9,
+          estimatedCost: Math.round(totalBudget * 0.9),
           rating: 4.9,
           duration,
           highlights: ['Overwater Villas', 'Snorkeling', 'Spa Treatments', 'Sunset Dining']
@@ -147,7 +150,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Switzerland',
           image: '/placeholder.svg',
           description: 'Breathtaking mountain views, luxury resorts, and world-class skiing in the heart of Europe.',
-          estimatedCost: budget * 0.85,
+          estimatedCost: Math.round(totalBudget * 0.85),
           rating: 4.8,
           duration,
           highlights: ['Matterhorn', 'Jungfrau', 'Luxury Resorts', 'Alpine Villages']
@@ -158,7 +161,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           country: 'Greece',
           image: '/placeholder.svg',
           description: 'Iconic white buildings, stunning sunsets, and luxury accommodations overlooking the Aegean Sea.',
-          estimatedCost: budget * 0.8,
+          estimatedCost: Math.round(totalBudget * 0.8),
           rating: 4.9,
           duration,
           highlights: ['Oia Sunset', 'Wine Tasting', 'Luxury Hotels', 'Volcanic Beaches']
@@ -174,7 +177,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-2">Perfect Destinations for You</h2>
         <p className="text-muted-foreground">
-          Based on your budget of ${budget} for {getDuration()}
+          Based on your budget of ${budget} per person ({people} {people === 1 ? 'traveler' : 'travelers'}) for {getDuration()}
         </p>
       </div>
       

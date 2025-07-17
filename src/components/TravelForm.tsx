@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CalendarDays, DollarSign, Search } from 'lucide-react';
+import { CalendarDays, DollarSign, Search, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -14,6 +14,7 @@ interface TravelFormProps {
     startDate: Date | undefined;
     endDate: Date | undefined;
     budget: number;
+    people: number;
   }) => void;
 }
 
@@ -21,10 +22,11 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [budget, setBudget] = useState<number>(1000);
+  const [people, setPeople] = useState<number>(2);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch({ startDate, endDate, budget });
+    onSearch({ startDate, endDate, budget, people });
   };
 
   return (
@@ -50,7 +52,11 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     {startDate ? format(startDate, "PPP") : "Select start date"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent 
+                  className="w-auto p-0 z-50" 
+                  align="start"
+                  sideOffset={4}
+                >
                   <Calendar
                     mode="single"
                     selected={startDate}
@@ -58,6 +64,8 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     disabled={(date) => date < new Date()}
                     initialFocus
                     className="p-3 pointer-events-auto"
+                    fixedWeeks
+                    showOutsideDays={false}
                   />
                 </PopoverContent>
               </Popover>
@@ -78,7 +86,11 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     {endDate ? format(endDate, "PPP") : "Select end date"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent 
+                  className="w-auto p-0 z-50" 
+                  align="start"
+                  sideOffset={4}
+                >
                   <Calendar
                     mode="single"
                     selected={endDate}
@@ -86,25 +98,45 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     disabled={(date) => date < (startDate || new Date())}
                     initialFocus
                     className="p-3 pointer-events-auto"
+                    fixedWeeks
+                    showOutsideDays={false}
                   />
                 </PopoverContent>
               </Popover>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>Budget (USD)</Label>
-            <div className="relative">
-              <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="number"
-                value={budget}
-                onChange={(e) => setBudget(Number(e.target.value))}
-                className="pl-10"
-                min="100"
-                step="100"
-                placeholder="Enter your budget"
-              />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Budget (USD)</Label>
+              <div className="relative">
+                <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="number"
+                  value={budget}
+                  onChange={(e) => setBudget(Number(e.target.value))}
+                  className="pl-10"
+                  min="100"
+                  step="100"
+                  placeholder="Enter your budget"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Number of People</Label>
+              <div className="relative">
+                <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="number"
+                  value={people}
+                  onChange={(e) => setPeople(Number(e.target.value))}
+                  className="pl-10"
+                  min="1"
+                  max="20"
+                  placeholder="How many travelers?"
+                />
+              </div>
             </div>
           </div>
 
