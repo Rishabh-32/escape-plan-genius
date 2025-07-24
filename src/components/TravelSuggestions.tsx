@@ -1,5 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DestinationCard from './DestinationCard';
+import DestinationDetails from './DestinationDetails';
+
+// Import destination images
+import pragueImg from '@/assets/prague.jpg';
+import budapestImg from '@/assets/budapest.jpg';
+import krakowImg from '@/assets/krakow.jpg';
+import lisbonImg from '@/assets/lisbon.jpg';
+import barcelonaImg from '@/assets/barcelona.jpg';
+import amsterdamImg from '@/assets/amsterdam.jpg';
+import tokyoImg from '@/assets/tokyo.jpg';
+import newyorkImg from '@/assets/newyork.jpg';
+import sydneyImg from '@/assets/sydney.jpg';
+import maldivesImg from '@/assets/maldives.jpg';
+import swissalpsImg from '@/assets/swissalps.jpg';
+import santoriniImg from '@/assets/santorini.jpg';
 
 interface TravelSuggestionsProps {
   budget: number;
@@ -9,6 +24,8 @@ interface TravelSuggestionsProps {
 }
 
 const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate, endDate, people }) => {
+  const [selectedDestination, setSelectedDestination] = useState<any>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const getDuration = () => {
     if (startDate && endDate) {
       const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
@@ -29,7 +46,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '1',
           name: 'Prague',
           country: 'Czech Republic',
-          image: '/placeholder.svg',
+          image: pragueImg,
           description: 'Explore historic castles, beautiful architecture, and enjoy affordable dining in this magical European city.',
           estimatedCost: Math.round(totalBudget * 0.8),
           rating: 4.6,
@@ -40,7 +57,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '2',
           name: 'Budapest',
           country: 'Hungary',
-          image: '/placeholder.svg',
+          image: budapestImg,
           description: 'Discover thermal baths, stunning parliament buildings, and vibrant nightlife on a budget.',
           estimatedCost: Math.round(totalBudget * 0.7),
           rating: 4.5,
@@ -51,7 +68,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '3',
           name: 'Krakow',
           country: 'Poland',
-          image: '/placeholder.svg',
+          image: krakowImg,
           description: 'Medieval charm meets modern culture in this UNESCO World Heritage city.',
           estimatedCost: Math.round(totalBudget * 0.6),
           rating: 4.7,
@@ -65,7 +82,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '4',
           name: 'Lisbon',
           country: 'Portugal',
-          image: '/placeholder.svg',
+          image: lisbonImg,
           description: 'Colorful neighborhoods, delicious pastries, and stunning coastal views await in this vibrant capital.',
           estimatedCost: Math.round(totalBudget * 0.9),
           rating: 4.8,
@@ -76,7 +93,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '5',
           name: 'Barcelona',
           country: 'Spain',
-          image: '/placeholder.svg',
+          image: barcelonaImg,
           description: 'Art, architecture, beaches, and amazing food come together in this Mediterranean paradise.',
           estimatedCost: Math.round(totalBudget * 0.85),
           rating: 4.7,
@@ -87,7 +104,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '6',
           name: 'Amsterdam',
           country: 'Netherlands',
-          image: '/placeholder.svg',
+          image: amsterdamImg,
           description: 'Canals, museums, and a unique culture make this one of Europe\'s most charming cities.',
           estimatedCost: Math.round(totalBudget * 0.95),
           rating: 4.6,
@@ -101,7 +118,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '7',
           name: 'Tokyo',
           country: 'Japan',
-          image: '/placeholder.svg',
+          image: tokyoImg,
           description: 'Where ancient traditions meet cutting-edge technology in the world\'s most fascinating metropolis.',
           estimatedCost: Math.round(totalBudget * 0.9),
           rating: 4.9,
@@ -112,7 +129,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '8',
           name: 'New York',
           country: 'United States',
-          image: '/placeholder.svg',
+          image: newyorkImg,
           description: 'The city that never sleeps offers world-class museums, Broadway shows, and iconic landmarks.',
           estimatedCost: Math.round(totalBudget * 0.85),
           rating: 4.7,
@@ -123,7 +140,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '9',
           name: 'Sydney',
           country: 'Australia',
-          image: '/placeholder.svg',
+          image: sydneyImg,
           description: 'Stunning harbor views, beautiful beaches, and a laid-back lifestyle in Australia\'s most iconic city.',
           estimatedCost: Math.round(totalBudget * 0.95),
           rating: 4.8,
@@ -137,7 +154,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '10',
           name: 'Maldives',
           country: 'Maldives',
-          image: '/placeholder.svg',
+          image: maldivesImg,
           description: 'Luxury overwater bungalows and pristine beaches in this tropical paradise.',
           estimatedCost: Math.round(totalBudget * 0.9),
           rating: 4.9,
@@ -148,7 +165,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '11',
           name: 'Swiss Alps',
           country: 'Switzerland',
-          image: '/placeholder.svg',
+          image: swissalpsImg,
           description: 'Breathtaking mountain views, luxury resorts, and world-class skiing in the heart of Europe.',
           estimatedCost: Math.round(totalBudget * 0.85),
           rating: 4.8,
@@ -159,7 +176,7 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
           id: '12',
           name: 'Santorini',
           country: 'Greece',
-          image: '/placeholder.svg',
+          image: santoriniImg,
           description: 'Iconic white buildings, stunning sunsets, and luxury accommodations overlooking the Aegean Sea.',
           estimatedCost: Math.round(totalBudget * 0.8),
           rating: 4.9,
@@ -183,9 +200,29 @@ const TravelSuggestions: React.FC<TravelSuggestionsProps> = ({ budget, startDate
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {suggestions.map((destination) => (
-          <DestinationCard key={destination.id} destination={destination} />
+          <DestinationCard 
+            key={destination.id} 
+            destination={destination}
+            onViewDetails={() => {
+              setSelectedDestination(destination);
+              setIsDetailsOpen(true);
+            }}
+          />
         ))}
       </div>
+
+      {selectedDestination && (
+        <DestinationDetails
+          destination={selectedDestination}
+          budget={budget}
+          people={people}
+          isOpen={isDetailsOpen}
+          onClose={() => {
+            setIsDetailsOpen(false);
+            setSelectedDestination(null);
+          }}
+        />
+      )}
     </div>
   );
 };

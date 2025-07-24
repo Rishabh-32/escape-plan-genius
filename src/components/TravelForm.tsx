@@ -70,9 +70,9 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent 
-                  className="w-auto p-0 z-50" 
+                  className="w-auto p-0 z-50 shadow-lg border-2" 
                   align="start"
-                  sideOffset={4}
+                  sideOffset={8}
                 >
                   <Calendar
                     mode="single"
@@ -86,7 +86,6 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     }}
                     disabled={(date) => date < new Date()}
                     initialFocus
-                    className="p-3 pointer-events-auto"
                     fixedWeeks
                     showOutsideDays={false}
                   />
@@ -110,9 +109,9 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent 
-                  className="w-auto p-0 z-50" 
+                  className="w-auto p-0 z-50 shadow-lg border-2" 
                   align="start"
-                  sideOffset={4}
+                  sideOffset={8}
                 >
                   <Calendar
                     mode="single"
@@ -121,7 +120,6 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                     disabled={(date) => date < (startDate || new Date())}
                     month={startDate ? startDate : undefined}
                     initialFocus
-                    className="p-3 pointer-events-auto"
                     fixedWeeks
                     showOutsideDays={false}
                   />
@@ -132,7 +130,7 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Budget (USD)</Label>
+              <Label className="text-sm font-medium">Budget per Person (USD)</Label>
               <div className="relative">
                 <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -141,23 +139,26 @@ const TravelForm: React.FC<TravelFormProps> = ({ onSearch }) => {
                   onChange={handleBudgetChange}
                   onFocus={handleBudgetFocus}
                   onBlur={handleBudgetBlur}
-                  className="pl-10"
-                  placeholder="Enter your budget"
+                  className="pl-10 h-12 text-lg font-medium border-2 focus:border-primary/50 transition-colors"
+                  placeholder="Enter budget per person"
                   pattern="[0-9]*"
                   inputMode="numeric"
                 />
+                <div className="mt-1 text-xs text-muted-foreground">
+                  Total budget: ${Number(budget) * people}
+                </div>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label>Number of People</Label>
+              <Label className="text-sm font-medium">Number of Travelers</Label>
               <div className="relative">
                 <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="number"
                   value={people}
                   onChange={(e) => setPeople(Number(e.target.value))}
-                  className="pl-10"
+                  className="pl-10 h-12 text-lg font-medium border-2 focus:border-primary/50 transition-colors"
                   min="1"
                   max="20"
                   placeholder="How many travelers?"

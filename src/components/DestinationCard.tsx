@@ -16,9 +16,10 @@ interface DestinationCardProps {
     duration: string;
     highlights: string[];
   };
+  onViewDetails?: () => void;
 }
 
-const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
+const DestinationCard: React.FC<DestinationCardProps> = ({ destination, onViewDetails }) => {
   return (
     <Card className="overflow-hidden hover:shadow-travel transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative h-48 overflow-hidden">
@@ -71,7 +72,11 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
           </div>
         </div>
         
-        <Button variant="sunset" className="w-full">
+        <Button 
+          variant="sunset" 
+          className="w-full" 
+          onClick={onViewDetails}
+        >
           View Details
         </Button>
       </CardContent>
